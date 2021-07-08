@@ -1,8 +1,9 @@
 <template>
   <div id="app" class="container">
     <h1>Мои расходы</h1>
+    <!-- v-bind:sortCosts="sortCosts" -->
     <List
-      v-bind:sortCosts="sortCosts"
+      v-bind:sortCosts="paymentList"
     />
     <Pagination
       v-bind:costs="costs"
@@ -58,6 +59,28 @@ export default {
     lastItem: 0,
   }),
   methods: {
+    fetchData(){
+      return [
+        {
+          id: 1,
+          date: '01-01-01',
+          category: 'Еда',
+          value: 177,
+        },
+        {
+          id: 2,
+          date: '01-01-01',
+          category: 'Транспорт',
+          value: 145,
+        },
+        {
+          id: 3,
+          date: '01-01-01',
+          category: 'Развлечения',
+          value: 188,
+        }
+      ]
+    },
     showForm(){
       if (this.showFormTag){
         this.showFormTag = false;
@@ -81,11 +104,18 @@ export default {
       }
     }
   },
+  computed: {
+    paymentList(){
+      return this.$store.getters.getPaymentList
+    }
+  },
   created(){
+    this.costs = this.fetchData();
     for (let key in this.costs) {
         this.lenght = this.lenght + 1;
     }
-    this.sortCosts.push(this.costs[0])
+    this.sortCosts.push(this.costs[0]);
+    this.$store.commit('setPaymentsListData', this.fetchData())
   }
 }
 </script>
