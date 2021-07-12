@@ -35,9 +35,9 @@ export default {
         sortCosts: Array,
     },
     computed: {
-        ...mapGetters(['getFullPaymentValue']),
+        ...mapGetters(['getFullCostsValue']),
         getFPV(){
-            return this.getFullPaymentValue
+            return this.getFullCostsValue
         }
     }
 }
